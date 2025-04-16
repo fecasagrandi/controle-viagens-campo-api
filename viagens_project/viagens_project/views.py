@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Usuario, Destino, Transporte, Categoria, Viagem
-from .serializers import UsuarioSerializer, DestinoSerializer, TransporteSerializer, CategoriaSerializer, ViagemSerializer
+from core.models import Usuario, Destino, Transporte, Categoria, Viagem
+from core.serializers import UsuarioSerializer, DestinoSerializer, TransporteSerializer, CategoriaSerializer, ViagemSerializer
 
 @api_view(['POST'])
 def inserirUsuario(request):

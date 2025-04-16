@@ -1,22 +1,34 @@
-"""
-URL configuration for viagens_project project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 
+from django.urls import path
+from . import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('usuarios/', views.listarUsuarios, name='listar_usuarios'),
+    path('usuarios/<int:pk>/', views.atualizarUsuario, name='atualizar_usuario'),
+    path('usuarios/delete/<int:pk>/', views.deletarUsuario, name='deletar_usuario'),
+    path('usuarios/inserir/', views.inserirUsuario, name='inserir_usuario'),
+
+    path('destinos/', views.listarDestinos, name='listar_destinos'),
+    path('destinos/<int:pk>/', views.atualizarDestino, name='atualizar_destino'),
+    path('destinos/delete/<int:pk>/', views.deletarDestino, name='deletar_destino'),
+    path('destinos/inserir/', views.inserirDestino, name='inserir_destino'),
+
+    path('transportes/', views.listarTransportes, name='listar_transportes'),
+    path('transportes/<int:pk>/', views.atualizarTransporte, name='atualizar_transporte'),
+    path('transportes/delete/<int:pk>/', views.deletarTransporte, name='deletar_transporte'),
+    path('transportes/inserir/', views.inserirTransporte, name='inserir_transporte'),
+
+    path('categorias/', views.listarCategorias, name='listar_categorias'),
+    path('categorias/<int:pk>/', views.atualizarCategoria, name='atualizar_categoria'),
+    path('categorias/delete/<int:pk>/', views.deletarCategoria, name='deletar_categoria'),
+    path('categorias/inserir/', views.inserirCategoria, name='inserir_categoria'),
+
+    path('viagens/', views.listarViagens, name='listar_viagens'),
+    path('viagens/<int:pk>/', views.atualizarViagem, name='atualizar_viagem'),
+    path('viagens/delete/<int:pk>/', views.deletarViagem, name='deletar_viagem'),
+    path('viagens/inserir/', views.inserirViagem, name='inserir_viagem'),
 ]
+

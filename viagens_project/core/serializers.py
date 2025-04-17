@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import Usuario, Destino, Transporte, Categoria, Viagem
-import re
+import re, datetime
+
 
 # Usuario
 class UsuarioSerializer(serializers.ModelSerializer):
@@ -44,11 +45,6 @@ class CategoriaSerializer(serializers.ModelSerializer):
 
 # Viagem
 class ViagemSerializer(serializers.ModelSerializer):
-    usuario = UsuarioSerializer()
-    destino = DestinoSerializer()
-    transporte = TransporteSerializer()
-    categoria = CategoriaSerializer()
-
     class Meta:
         model = Viagem
         fields = ['id', 'usuario', 'destino', 'transporte', 'categoria', 'data_viagem']
@@ -57,3 +53,4 @@ class ViagemSerializer(serializers.ModelSerializer):
         if value < datetime.date.today():
             raise serializers.ValidationError("A data da viagem não pode ser no passado.")
         return value
+

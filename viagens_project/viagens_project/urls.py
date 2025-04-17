@@ -1,40 +1,32 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework.routers import DefaultRouter
+from .views import UsuarioViewSet, DestinoViewSet, TransporteViewSet, CategoriaViewSet, ViagemViewSet
 
-from django.urls import path
-from . import views
+router = DefaultRouter()
+router.register(r'usuarios', UsuarioViewSet, basename='usuario')
+router.register(r'destinos', DestinoViewSet, basename='destino')
+router.register(r'transportes', TransporteViewSet, basename='transporte')
+router.register(r'categorias', CategoriaViewSet, basename='categoria')
+router.register(r'viagens', ViagemViewSet, basename='viagem')
+
+# Configuração do Swagger
+schema_view = get_schema_view(
+   openapi.Info(
+      title="API de Viagens",
+      default_version='v1',
+      description="API para gerenciar usuários, destinos, transportes, categorias e viagens.",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="fcasagrandi38@gmail.com"),
+      license=openapi.License(name="Licença Stark Industries"),
+   ),
+   public=True,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # Usuário
-    path('usuarios/', views.listarUsuarios, name='listar_usuarios'),
-    path('usuarios/inserir/', views.inserirUsuario, name='inserir_usuario'),
-    path('usuarios/<int:pk>/', views.atualizarUsuario, name='atualizar_usuario'),
-    path('usuarios/delete/<int:pk>/', views.deletarUsuario, name='deletar_usuario'),
-
-    # Destino
-    path('destinos/', views.listarDestinos, name='listar_destinos'),
-    path('destinos/inserir/', views.inserirDestino, name='inserir_destino'),
-    path('destinos/<int:pk>/', views.atualizarDestino, name='atualizar_destino'),
-    path('destinos/delete/<int:pk>/', views.deletarDestino, name='deletar_destino'),
-
-    # Transporte
-    path('transportes/', views.listarTransportes, name='listar_transportes'),
-    path('transportes/inserir/', views.inserirTransporte, name='inserir_transporte'),
-    path('transportes/<int:pk>/', views.atualizarTransporte, name='atualizar_transporte'),
-    path('transportes/delete/<int:pk>/', views.deletarTransporte, name='deletar_transporte'),
-
-    # Categoria
-    path('categorias/', views.listarCategorias, name='listar_categorias'),
-    path('categorias/inserir/', views.inserirCategoria, name='inserir_categoria'),
-    path('categorias/<int:pk>/', views.atualizarCategoria, name='atualizar_categoria'),
-    path('categorias/delete/<int:pk>/', views.deletarCategoria, name='deletar_categoria'),
-
-    # Viagem
-    path('viagens/', views.listarViagens, name='listar_viagens'),
-    path('viagens/inserir/', views.inserirViagem, name='inserir_viagem'),
-    path('viagens/<int:pk>/', views.atualizarViagem, name='atualizar_viagem'),
-    path('viagens/delete/<int:pk>/', views.deletarViagem, name='deletar_viagem'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('api/', include(router.urls)),
 ]
-
